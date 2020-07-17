@@ -9,6 +9,20 @@
   "author": "Brice Friha",
   "license": "MIT",
   "dependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "debug": "^2.6.9",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.3",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.4.10",
+    "pug": "^3.0.0"
   }
 }
