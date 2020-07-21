@@ -1,7 +1,7 @@
 import expressJwt from 'express-jwt';
 
 // Call the config file
-// import config from '../config/config.js';
+import config from '../config/config.js';
 
 // Call the user service
 // import UserRepository from '../repositories/UserRepository';
@@ -13,7 +13,7 @@ export const jwt = () => {
         path: [
             // public routes that don't require authentication
             '/users/authenticate',
-            '/users/register',
+            '/users/create',
             '/users/forgot',
             '/users/recovery'
         ]
