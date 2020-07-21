@@ -13,6 +13,10 @@ const orderSchema = new Schema ({
         type: Date, 
         default: Date.now 
     },
+    IsCanceled: {
+        type: Boolean,
+        default: false,
+    }
 
 
 })

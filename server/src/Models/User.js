@@ -9,11 +9,27 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: () => uuidv4().replace(/\-/g, ""),
     },
-    email: String,
-    firstName: String,
-    lastName: String,
-    Hash: String,
-    IsStaff: Boolean
+    email: {
+        type: String,
+        required: true
+    },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    Hash: {
+        type: String,
+        required: true
+    },
+    IsStaff: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 
   },
   {
