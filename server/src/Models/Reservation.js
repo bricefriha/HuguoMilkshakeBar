@@ -13,8 +13,16 @@ const reservationSchema = new Schema({
     Time : {
         type: Date,
         required: true,
-    }
+    },
+    creationDate: { 
+        type: Date, 
+        default: Date.now 
+    },
 
 })
+
+reservationSchema.statics.CreateRes = async function(tableNum, userId, time) {
+
+};
 // Exporting the stuff
 module.exports = mongoose.model('Reservation', reservationSchema);
