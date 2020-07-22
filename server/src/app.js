@@ -1,4 +1,5 @@
 import http from "http";
+import createError from "http-errors";
 import express from "express";
 import logger from "morgan";
 import {jwt } from './middleware/jwt.js';
@@ -56,10 +57,10 @@ app.use((err, req, res) => {
 });
 
 /** Create HTTP server. */
-const server = http.createServer(app);
+// const server = http.createServer(app);
 /** Listen on provided port, on all network interfaces. */
-server.listen(port);
+app.listen(port);
 /** Event listener for HTTP server "listening" event. */
-server.on("listening", () => {
+app.on("listening", () => {
   console.log(`Listening on port:: http://localhost:${port}/`);
 });
