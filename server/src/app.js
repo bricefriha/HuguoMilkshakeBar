@@ -5,6 +5,7 @@ import logger from "morgan";
 import {jwt } from './middleware/jwt.js';
 import users from './controllers/users.js';
 import tables from './controllers/tables.js';
+import reservations from './controllers/reservations.js';
 import config from './config/config.js';
 import mongoose from 'mongoose';
 
@@ -43,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', users);
 app.use('/tables', tables);
+app.use('/reservations', reservations);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

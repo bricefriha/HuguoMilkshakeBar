@@ -8,9 +8,9 @@ router
     .post('/create', async (req, res) => {
 
         // Fetch all the informations
-        const { email, firstname, lastname, username, password, isStaff } = req.body;
-        await reservation.createRes(email, firstname, lastname, username, password, isStaff)
-            .then(res.status(200).json({ message: 'Reservation created' }))
+        const { tableNum, timeStart, timeEnd } = req.body;
+        await reservation.createRes(tableNum, req.user.sub, timeStart, timeEnd)
+            .then(data => res.status(200).json({  data }))
             .catch(err => res.status(500).json({ message: err }));
     })
     ;
