@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Table from "./Table.js";
+import userModel from "./User.js"
 
 const reservationSchema = new mongoose.Schema({
     table: {
@@ -32,7 +33,11 @@ const reservationSchema = new mongoose.Schema({
     }
 
 })
-
+// Get a reservation
+reservationSchema.statics.getById = async function (id) {
+    return await this.findOne({_id: id });
+}
+// Create a reservation
 reservationSchema.statics.createRes = async function(tableNum, userId, timeStartRes, timeEndRes) {
     try {
         const selectedTable = await Table.findOne({tableNum});
@@ -75,5 +80,28 @@ reservationSchema.statics.createRes = async function(tableNum, userId, timeStart
         throw err;
     }
 };
+// Cancel a reservation
+reservationSchema.statics.cancel = async function (userId, reservationId) {
+    try {
+        // Get the current user
+        const currentUser = await userModel.getById(userId);
+
+        // Get the reservation to canceled
+        const selectedReservation = await this.findById(reservationId);
+
+        // We can cancel it only if the user is a Staff or the user made it
+        if (currentUser.isStaff || selectedReservation.customer.equals(userId)) {
+            // Cancel the reservation
+            Object.assign(selectedReservation, {canceled: true});
+
+            return await selectedReservation.save();
+        } else {
+            throw 'Sorry you\'re not allowed to perform this action';
+        }
+     } catch (err) {
+         throw err;
+     }
+    
+}
 // Exporting the stuff
 export default mongoose.model('Reservation', reservationSchema);
