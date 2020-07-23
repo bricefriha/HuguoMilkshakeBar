@@ -6,7 +6,10 @@ const router = express.Router();
 
 router
     .get('/', async (req, res) => {
-        // 
+        // Get all the tables
+        await table.getAll()
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
     })
     .post('/create', async (req, res) => {
 

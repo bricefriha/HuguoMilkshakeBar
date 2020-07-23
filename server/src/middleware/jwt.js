@@ -16,7 +16,8 @@ export const jwt = () => {
             '/users/authenticate',
             '/users/create',
             '/users/forgot',
-            '/users/recovery'
+            '/users/recovery',
+            '/tables/'
         ]
     });
 }

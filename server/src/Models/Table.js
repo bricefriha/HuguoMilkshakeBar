@@ -12,6 +12,7 @@ const tableSchema = new mongoose.Schema ({
     }
 })
 
+// Create a new table
 tableSchema.statics.createTable = async function (userId, numTable) {
     try {
         // get the user who doesn't the action
@@ -28,6 +29,16 @@ tableSchema.statics.createTable = async function (userId, numTable) {
         } else {
             throw 'Only staff members can perform this action'
         }
+
+    } catch (err) {
+        throw err;
+    }
+    
+}
+// Get all the tables
+tableSchema.statics.getAll = async function () {
+    try {
+        return await this.find();
 
     } catch (err) {
         throw err;
