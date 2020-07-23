@@ -89,13 +89,17 @@ userSchema.statics.authenticate = async function (email, username, password) {
             }
 
         }
-
-        
-        
-        
     } catch (err) {
         throw err;
 
+    }
+}
+// Get a user by id
+userSchema.statics.getById = async function (id) {
+    try {
+        return this.findOne({ _id: id })
+    } catch (err) {
+        throw err;
     }
 }
 

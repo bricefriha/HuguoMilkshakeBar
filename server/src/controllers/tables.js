@@ -1,0 +1,41 @@
+import table from '../models/Table.js';
+
+import express from 'express';
+
+const router = express.Router();
+
+router
+    .get('/', async (req, res) => {
+        // 
+    })
+    .post('/create', async (req, res) => {
+
+        // Fetch all the informations
+        const { num } = req.body;
+
+        // Create the table
+        await table.createTable(req.user.sub, num)
+            .then(data => res.status(200).json({ message: 'Table created', info: data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
+    // free/unfree a table up
+    .put('/:tableNum', async (req, res) => {
+
+        // Fetch all the informations from the body
+        const { time } = req.body;
+
+        //
+        await table.freeTable(email, firstname, lastname, username, password, isStaff)
+            .then(data => res.status(200).json({ message: data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
+    .delete('/:tableNum', async (req, res) => {
+
+        // call a methode to delete the table
+        await table.deleteTable(req.user.sub, req.params.tableNum)
+            .then(res.status(200).json({ message: 'Table deleted' }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
+    ;
+
+export default router;
