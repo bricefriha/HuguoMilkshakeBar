@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import userModel from "./User.js"
 
 const tableSchema = new mongoose.Schema ({
-    numTable: {
+    tableNum: {
         type: Number,
         required: true,
     },
@@ -13,19 +13,19 @@ const tableSchema = new mongoose.Schema ({
 })
 
 // Create a new table
-tableSchema.statics.createTable = async function (userId, numTable) {
+tableSchema.statics.createTable = async function (userId, tableNum) {
     try {
-        // get the user who doesn't the action
+        // get the user who does the action
         const user = await userModel.getById(userId);
 
         // if this user is a staff we can perform the action
         if (user.isStaff) {
             // Verify a table doesn't exist with the same number
-            if (await this.findOne({ numTable })) {
-                throw 'Table "' + numTable + '" already exists';
+            if (await this.findOne({ tableNum })) {
+                throw 'Table "' + tableNum + '" already exists';
             }
             // Create a new table using the parameters
-            return await this.create({ numTable });
+            return await this.create({ tableNum });
         } else {
             throw 'Only staff members can perform this action'
         }
@@ -38,7 +38,30 @@ tableSchema.statics.createTable = async function (userId, numTable) {
 // Get all the tables
 tableSchema.statics.getAll = async function () {
     try {
+        // Return all the tables
         return await this.find();
+
+    } catch (err) {
+        throw err;
+    }
+    
+}
+// Get all the tables
+tableSchema.statics.deleteTable = async function (userId, tableNum) {
+    try {
+        // get the user who does the action
+        const user = await userModel.getById(userId);
+
+        const table = await this.findOne({tableNum});
+        console.log(table);
+
+        // if this user is a staff we can perform the action
+        if (user.isStaff) {
+            // Delete the table
+            return await this.deleteOne({tableNum});   
+        } else {
+            throw 'Only staff members can perform this action'
+        }
 
     } catch (err) {
         throw err;

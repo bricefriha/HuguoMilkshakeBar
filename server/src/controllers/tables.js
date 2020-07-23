@@ -33,10 +33,9 @@ router
             .catch(err => res.status(500).json({ message: err }));
     })
     .delete('/:tableNum', async (req, res) => {
-
         // call a methode to delete the table
         await table.deleteTable(req.user.sub, req.params.tableNum)
-            .then(res.status(200).json({ message: 'Table deleted' }))
+            .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
     })
     ;
