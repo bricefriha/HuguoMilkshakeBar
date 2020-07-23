@@ -25,6 +25,10 @@ const reservationSchema = new mongoose.Schema({
     expired: {
         type: Boolean,
         default: false
+    },
+    canceled: {
+        type: Boolean,
+        default: false
     }
 
 })
@@ -37,7 +41,7 @@ reservationSchema.statics.createRes = async function(tableNum, userId, timeStart
 
         if (selectedTable) {
             // Find all reservation starting or ending on the same period
-            const reservationOnP = await this.find({
+            const reservationOnP = await this.find({ table: selectedTable._id,
 
                 $or:[
                     { 
@@ -52,7 +56,9 @@ reservationSchema.statics.createRes = async function(tableNum, userId, timeStart
                         { timeEnd: {$gte: dateEnd}}
                         ]
                     }
-                ]
+                ],
+                expired: false,
+                canceled: false
             });
 
             // If there is no reservation we can create one
