@@ -111,6 +111,13 @@ reservationSchema.statics.getAll = async function (){
         throw err;
     }
 }
-reservationSchema.statics.getByUser = async function (){}
+reservationSchema.statics.getByUser = async function (userId){
+    try {
+
+        return await this.find({customer: userId});
+    } catch (err) {
+        throw err;
+    }
+}
 // Exporting the stuff
 export default mongoose.model('Reservation', reservationSchema);
