@@ -46,19 +46,47 @@ tableSchema.statics.getAll = async function () {
     }
     
 }
-// Get all the tables
+// Delete a table
 tableSchema.statics.deleteTable = async function (userId, tableNum) {
     try {
         // get the user who does the action
         const user = await userModel.getById(userId);
 
-        const table = await this.findOne({tableNum});
-        console.log(table);
-
         // if this user is a staff we can perform the action
         if (user.isStaff) {
             // Delete the table
             return await this.deleteOne({tableNum});   
+        } else {
+            throw 'Only staff members can perform this action'
+        }
+
+    } catch (err) {
+        throw err;
+    }
+    
+}
+// Get all the tables
+tableSchema.statics.freeTable = async function (userId, tableNum) {
+    try {
+        // get the user who does the action
+        const user = await userModel.getById(userId);
+
+        // if this user is a staff we can perform the action
+        if (user.isStaff) {
+            
+            // Get the table
+            const selectedTable = await this.findOne({ tableNum });
+
+            if (selectedTable) {
+                // Update it
+                Object.assign(selectedTable, {isFree: !selectedTable.isFree });
+
+                // Save it
+                return await selectedTable.save();
+            } else {
+                throw 'This table doesn\'t exist';
+            }
+
         } else {
             throw 'Only staff members can perform this action'
         }

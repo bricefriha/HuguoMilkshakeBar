@@ -24,12 +24,9 @@ router
     // free/unfree a table up
     .put('/:tableNum', async (req, res) => {
 
-        // Fetch all the informations from the body
-        const { time } = req.body;
-
         //
-        await table.freeTable(email, firstname, lastname, username, password, isStaff)
-            .then(data => res.status(200).json({ message: data }))
+        await table.freeTable(req.user.sub, req.params.tableNum)
+            .then(data => res.status(200).json({  data }))
             .catch(err => res.status(500).json({ message: err }));
     })
     .delete('/:tableNum', async (req, res) => {
