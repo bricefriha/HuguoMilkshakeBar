@@ -102,6 +102,15 @@ reservationSchema.statics.cancel = async function (userId, reservationId) {
          throw err;
      }
     
+};
+reservationSchema.statics.getAll = async function (){
+    try {
+
+        return await this.find();
+    } catch (err) {
+        throw err;
+    }
 }
+reservationSchema.statics.getByUser = async function (){}
 // Exporting the stuff
 export default mongoose.model('Reservation', reservationSchema);
