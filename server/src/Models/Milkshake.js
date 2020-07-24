@@ -20,7 +20,11 @@ const milkshakeSchema = new mongoose.Schema ({
 });
 // Get all milkshakes
 milkshakeSchema.statics.getAll = async function () {
-    return await this.find();
+    try {
+        return await this.find();
+    } catch (err) {
+        throw err;
+    }
 }
 // create a milkshake
 milkshakeSchema.statics.createMilkshake = async function (userId, name, image, description, price) {
@@ -39,6 +43,25 @@ milkshakeSchema.statics.createMilkshake = async function (userId, name, image, d
         }
     } catch (err) {
         // Throw the specific error
+        throw err;
+    }
+    
+}
+// create a milkshake
+milkshakeSchema.statics.deleteMilkshake = async function (userId, milkshakeId) {
+    try {
+        // get the user who does the action
+        const user = await userModel.getById(userId);
+
+        // if this user is a staff we can perform the action
+        if (user.isStaff) {
+            // Delete the table
+            return await this.deleteOne({_id: milkshakeId});   
+        } else {
+            throw 'Only staff members can perform this action'
+        }
+
+    } catch (err) {
         throw err;
     }
     
