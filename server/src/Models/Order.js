@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import userModel from "./User.js"
+import { v4 as uuidv5 } from "uuid";
 
 const orderSchema = new mongoose.Schema ({
-    NumOrder: {
-        type: Number,
-        required: true
+    numOrder: {
+        type: String,
+        default: uuidv5().replace(/\-/g, ""),
     },
-    Customer: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
@@ -14,12 +15,14 @@ const orderSchema = new mongoose.Schema ({
         type: Date, 
         default: Date.now 
     },
-    IsCanceled: {
+    isCanceled: {
+        type: Boolean,
+        default: false,
+    },
+    isValidated: {
         type: Boolean,
         default: false,
     }
-
-
 });
 
 orderSchema.statics.getAll = async function (userId) {
@@ -33,6 +36,16 @@ orderSchema.statics.getAll = async function (userId) {
         } else {
             throw 'Only staff members can perform this action';
         }
+    } catch (err) {
+        throw err;
+    }
+};
+// create an order
+orderSchema.statics.createOrder = async function (customer) {
+    try {
+        // get the user who does the action
+        return await this.create({ customer });
+
     } catch (err) {
         throw err;
     }
