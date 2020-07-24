@@ -7,6 +7,7 @@ import users from './controllers/users.js';
 import tables from './controllers/tables.js';
 import milkshakes from './controllers/milkshakes.js';
 import reservations from './controllers/reservations.js';
+import orders from './controllers/orders.js';
 import config from './config/config.js';
 import mongoose from 'mongoose';
 
@@ -47,6 +48,7 @@ app.use('/users', users);
 app.use('/tables', tables);
 app.use('/reservations', reservations);
 app.use('/milkshakes', milkshakes);
+app.use('/orders', orders);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
