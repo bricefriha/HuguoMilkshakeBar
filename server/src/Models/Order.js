@@ -1,6 +1,6 @@
-import {Schema} from "mongoose";
+import mongoose from "mongoose";
 
-const orderSchema = new Schema ({
+const orderSchema = new mongoose.Schema ({
     NumOrder: {
         type: Number,
         required: true
@@ -19,7 +19,13 @@ const orderSchema = new Schema ({
     }
 
 
-})
+});
+
+orderSchema.statics.getAll = async function (userId) {
+
+};
+
+
 
 // Exporting the stuff
-module.exports = mongoose.model('Order', orderSchema);
+export default mongoose.model('Order', orderSchema);
