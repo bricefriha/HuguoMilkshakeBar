@@ -1,21 +1,43 @@
-import {Schema} from "mongoose";
+import mongoose from "mongoose";
+import userModel from "./User.js";
 
-const milkshakeSchema = new Schema ({
-    Name: {
+const milkshakeSchema = new mongoose.Schema ({
+    name: {
         type: String,
         required: true,
     },
-    Image: {
+    image: {
         type: String,
         
     },
-    Description: {
+    description: {
         type: String,
     },
-    Price: {
+    price: {
         type: Number,
     }
 })
+// create a milkshake
+milkshakeSchema.statics.create = async function (userId, name, image, description, price) {
+    try {
+        // Get the curent user
+        const user = await userModel.findById(userId);
 
+        // Perform the action only if the user is a staff member
+        if (user.isStaff) {
+
+            // Create the milkshake
+            return await this.create({name, image, description, price});
+
+        } else {
+            // Throw an error
+            throw 'Your not allowed to perform this action';
+        }
+    } catch (err) {
+        // Throw the specific error
+        throw err;
+    }
+    
+}
 // Exporting the stuff
-module.exports = mongoose.model('Milkshake', milkshakeSchema);
+export default mongoose.model('Milkshake', milkshakeSchema);
