@@ -18,7 +18,8 @@ export const jwt = () => {
             '/users/forgot',
             '/users/recovery',
             '/tables/',
-            '/reservations/'
+            '/reservations/',
+            '/milkshakes/'
         ]
     });
 }

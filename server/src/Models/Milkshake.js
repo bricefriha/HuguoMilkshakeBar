@@ -15,17 +15,21 @@ const milkshakeSchema = new mongoose.Schema ({
     },
     price: {
         type: Number,
+        required: true,
     }
-})
+});
+// Get all milkshakes
+milkshakeSchema.statics.getAll = async function () {
+    return await this.find();
+}
 // create a milkshake
-milkshakeSchema.statics.create = async function (userId, name, image, description, price) {
+milkshakeSchema.statics.createMilkshake = async function (userId, name, image, description, price) {
     try {
         // Get the curent user
         const user = await userModel.findById(userId);
 
         // Perform the action only if the user is a staff member
         if (user.isStaff) {
-
             // Create the milkshake
             return await this.create({name, image, description, price});
 
