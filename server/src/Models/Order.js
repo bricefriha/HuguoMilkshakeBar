@@ -40,6 +40,14 @@ orderSchema.statics.getAll = async function (userId) {
         throw err;
     }
 };
+orderSchema.statics.getByCustomer = async function (userId) {
+    try {
+        
+        return await this.find({ customer: userId })
+    } catch (err) {
+        throw err;
+    }
+};
 // create an order
 orderSchema.statics.createOrder = async function (customer) {
     try {
