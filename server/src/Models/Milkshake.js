@@ -66,5 +66,29 @@ milkshakeSchema.statics.deleteMilkshake = async function (userId, milkshakeId) {
     }
     
 }
+// create a milkshake
+milkshakeSchema.statics.updateMilkshake = async function (userId, milkshakeId, fields ) {
+    try {
+        // get the user who does the action
+        const user = await userModel.getById(userId);
+
+        // if this user is a staff we can perform the action
+        if (user.isStaff) {
+            // Select the milkshake
+            const selectedMilkshake = await this.findById(milkshakeId);
+            // Update it
+            Object.assign(selectedMilkshake, fields);
+
+            // Save it
+            return await selectedMilkshake.save();  
+        } else {
+            throw 'Only staff members can perform this action'
+        }
+
+    } catch (err) {
+        throw err;
+    }
+    
+}
 // Exporting the stuff
 export default mongoose.model('Milkshake', milkshakeSchema);

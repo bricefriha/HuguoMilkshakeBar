@@ -23,9 +23,15 @@ router
 
     })
     .delete('/:milkshakeId', async (req, res) => {
-        console.log(req.params.milkshakeId);
         // Create a milshake
         await milkshake.deleteMilkshake(req.user.sub, req.params.milkshakeId)
+                       .then(data => res.status(200).json({ data }))
+                       .catch(err => res.status(500).json({ message: err }));
+
+    })
+    .put('/:milkshakeId', async (req, res) => {
+        // Create a milshake
+        await milkshake.updateMilkshake(req.user.sub, req.params.milkshakeId, req.body )
                        .then(data => res.status(200).json({ data }))
                        .catch(err => res.status(500).json({ message: err }));
 
