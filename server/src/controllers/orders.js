@@ -45,6 +45,13 @@ router
             .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
     })
+    .delete('/milkshake', async (req, res) => {
+
+        // Remove milkshake to the order
+        await orderItem.removeFromOrder(req.user.sub, req.body.orderNum, req.body.milkshakeId)
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
     ;
 
 export default router;

@@ -44,13 +44,40 @@ orderItemSchema.statics.addToOrder = async function (userId, fields) {
 
             } else {
                 // Create a new item
-                return await this.create({orderId: selectedOrder._id, milkshake: fields.milkshakeId});
+                return await this.create({orderId: selectedOrder._id, milkshake: fields.milkshakeId, quantity: fields.quantity });
             }
         } else {
             throw "You're not allowed to perform this action";
         }
     } catch (err) {
         throw err;
+    }
+};
+// Remove a milkshake to an order
+orderItemSchema.statics.removeFromOrder = async function (userId, orderNum, milkshakeId) {
+    try {
+        // Get the user who does the action
+        const user = await userModel.getById(userId);
+
+        // Get the selected order
+        const selectedOrder = await orderModel.findOne({ orderNum });
+
+        // if the order doesn't exist
+        if (!selectedOrder)
+            throw "This order doesn't exist";
+
+        // Verify if the user is allowed to perform the action
+        if (user.isStaff || selectedOrder.customer.equals(userId)) {
+
+            // Delete the table
+            return await this.deleteOne({orderId: selectedOrder._id , milkshake: milkshakeId});  
+        } else {
+            throw "You're not allowed to perform this action";
+        }
+
+
+    } catch (err) {
+        throw err
     }
 }
 
