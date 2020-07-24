@@ -1,4 +1,5 @@
 import order from '../models/Order.js';
+import orderItem from '../models/OrderItem.js';
 
 import express from 'express';
 
@@ -34,6 +35,13 @@ router
 
         // cancel the order
         await order.validateOrder(req.user.sub, req.params.orderNum)
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
+    .post('/milkshake', async (req, res) => {
+
+        // Add milkshake to the order
+        await orderItem.addToOrder(req.user.sub, req.body)
             .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
     })

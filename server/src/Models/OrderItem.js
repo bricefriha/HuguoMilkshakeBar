@@ -1,21 +1,59 @@
-import {Schema} from "mongoose";
+import mongoose from "mongoose";
+import userModel from "./User.js"
+import orderModel from "./Order.js"
 
-const orderitemSchema = new Schema ({
-    Order: {
-        type: Schema.Types.ObjectId,
+const orderItemSchema = new mongoose.Schema ({
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    Quantity: {
+    quantity: {
         type: Number,
-        required: true,
         default: 1
     },
-    Milkshake: {
-        type: Schema.Types.ObjectId, 
+    milkshake: {
+        type: mongoose.Schema.Types.ObjectId, 
         required: true
     }
-
 });
 
+// Add a milkshake to an order
+orderItemSchema.statics.addToOrder = async function (userId, fields) {
+    try {
+        
+        // get the user who does the action
+        const user = await userModel.getById(userId);
+
+        // Get the selected order
+        const selectedOrder = await orderModel.findOne({orderNum: fields.orderNum});
+
+        // if the order doesn't exist
+        if (!selectedOrder)
+            throw "this order doesn't exist";
+
+        if (user.isStaff || selectedOrder.customer.equals(userId)) {
+            // Try to find if there is not already this milkshake in the order
+            const existingOrderItem = await this.findOne({orderId: selectedOrder._id, milkshake: fields.milkshakeId});
+            
+            // if so
+            if (existingOrderItem) {
+                // Add plus one to the quantity
+                Object.assign(existingOrderItem, {quantity: fields.quantity ? existingOrderItem.quantity + fields.quantity : ++existingOrderItem.quantity});
+
+                return await existingOrderItem.save();
+
+            } else {
+                // Create a new item
+                return await this.create({orderId: selectedOrder._id, milkshake: fields.milkshakeId});
+            }
+        } else {
+            throw "You're not allowed to perform this action";
+        }
+    } catch (err) {
+        throw err;
+    }
+}
+
+
 // Exporting the stuff
-module.exports = mongoose.model('Orderitem', orderitemSchema);
+export default mongoose.model('Orderitem', orderItemSchema);
