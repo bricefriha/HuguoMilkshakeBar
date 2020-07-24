@@ -23,6 +23,13 @@ router
             .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
     })
+    .put('/cancel/:orderNum', async (req, res) => {
+
+        // cancel the order
+        await order.cancelOrder(req.user.sub, req.params.orderNum)
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
     ;
 
 export default router;
