@@ -77,8 +77,13 @@ postSchema.statics.updatePost = async function (userId, postId, fields) {
     } catch (err) {
         throw err;
     }
-    
-
+}
+postSchema.statics.getAll = async function () {
+    try {
+        return await this.find();
+    } catch (err) {
+        throw err;
+    }
 }
 // Exporting the stuff
 export default mongoose.model('Post', postSchema);
