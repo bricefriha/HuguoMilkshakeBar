@@ -10,5 +10,15 @@ router
             .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
     })
+    .delete("/:postId", async (req, res) => {
+        await post.deletePost(req.user.sub, req.params.postId)
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
+    .put("/:postId", async (req, res) => {
+        await post.updatePost(req.user.sub, req.params.postId, req.body )
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    })
     ;
 export default router;
