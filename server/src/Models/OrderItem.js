@@ -119,7 +119,6 @@ orderItemSchema.statics.getOrder = async function (userId, orderNum) {
             throw "You're not allowed to perform this action";
         }
     } catch (err) {
-        console.log(err);
         throw err;
     }
 }

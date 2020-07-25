@@ -5,6 +5,7 @@ import logger from "morgan";
 import {jwt } from './middleware/jwt.js';
 import users from './controllers/users.js';
 import tables from './controllers/tables.js';
+import posts from './controllers/posts.js';
 import milkshakes from './controllers/milkshakes.js';
 import reservations from './controllers/reservations.js';
 import orders from './controllers/orders.js';
@@ -49,6 +50,7 @@ app.use('/tables', tables);
 app.use('/reservations', reservations);
 app.use('/milkshakes', milkshakes);
 app.use('/orders', orders);
+app.use('/posts', posts);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
