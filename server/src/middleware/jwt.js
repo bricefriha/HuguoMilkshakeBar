@@ -20,7 +20,7 @@ export const jwt = () => {
             '/tables/',
             '/reservations/',
             '/milkshakes/',
-            '/posts/'
+            '/posts/',
         ]
     });
 }

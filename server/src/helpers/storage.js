@@ -3,7 +3,7 @@ import multer from 'multer';
 
  var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './ressources/uploads/');
+      cb(null, '../client/public/images/');
     },
     filename: (req, file, cb) => {
       var filetype = '';
