@@ -25,6 +25,15 @@ router
         await pic.deletePicture(req.user.sub, req.params.pictureId)
             .then(data => res.status(200).json({ data }))
             .catch(err => res.status(500).json({ message: err }));
-    } );
+    } )
+    .put('/:pictureId', async function(req, res){
+        const {title, description} = req.body;
+
+        // Delete the file
+        await pic.updatePicture(req.user.sub, req.params.pictureId, {title, description})
+            .then(data => res.status(200).json({ data }))
+            .catch(err => res.status(500).json({ message: err }));
+    } )
+    ;
 
 export default router;

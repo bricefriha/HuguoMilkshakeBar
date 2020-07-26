@@ -71,6 +71,28 @@ pictureSchema.statics.deletePicture = async function (userId, pictureId) {
     }
 
 }
+pictureSchema.statics.updatePicture = async function (userId, pictureId, fields) {
+    try {
+        // get the current user
+        const user = await userModel.findById(userId);
+
+        // Verify if the user is allowed to perform the action
+        if (user.isStaff) {
+            // Get the picture
+            const pic = await this.findById(pictureId);
+
+            Object.assign(pic, fields);
+
+            return await pic.save();
+        } else {
+            throw "You're not allowed to perform this action";
+        }
+
+    } catch (err) {
+        throw err;
+    }
+
+}
 
 // Exporting the stuff
 export default mongoose.model('Picture', pictureSchema);
