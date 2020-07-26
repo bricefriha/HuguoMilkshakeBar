@@ -67,7 +67,7 @@ postSchema.statics.updatePost = async function (userId, postId, fields) {
         // Verify if the user is allowed to perform the action
         if (user.isStaff) {
             // Update the object
-            Object.assign(selectedPost,  fields );
+            Object.assign(selectedPost, fields);
 
             // Create the new post
             return await selectedPost.save();
@@ -78,6 +78,7 @@ postSchema.statics.updatePost = async function (userId, postId, fields) {
         throw err;
     }
 }
+// get all posts
 postSchema.statics.getAll = async function () {
     try {
         return await this.find();
