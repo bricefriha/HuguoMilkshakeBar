@@ -9,7 +9,7 @@ const router = express.Router();
 router
     .get('/', async function(req, res) {
         await pic.getAll()
-            .then(data => res.status(200).json({ data }))
+            .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     })
     .post('/upload', upload.single('image'), async function(req, res) {
@@ -17,13 +17,13 @@ router
             res.status(500).json({ message:'error' });
           }
         await pic.savePicture(req.user.sub, req.body.title, req.body.description, 'http://192.168.0.7:3000/images/' + req.file.filename, req.file.filename)
-            .then(data => res.status(200).json({ data }))
+            .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     })
     .delete('/:pictureId', async function(req, res){
         // Delete the file
         await pic.deletePicture(req.user.sub, req.params.pictureId)
-            .then(data => res.status(200).json({ data }))
+            .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     } )
     .put('/:pictureId', async function(req, res){
@@ -31,7 +31,7 @@ router
 
         // Delete the file
         await pic.updatePicture(req.user.sub, req.params.pictureId, {title, description})
-            .then(data => res.status(200).json({ data }))
+            .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     } )
     ;

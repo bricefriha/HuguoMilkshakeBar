@@ -18,7 +18,7 @@ router
         // Fetch all the informations
         const { email, username, password } = req.body;
         await user.authenticate(email, username, password)
-            .then(data => res.status(200).json({ data }))
+            .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     });
 
