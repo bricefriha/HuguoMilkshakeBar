@@ -84,8 +84,10 @@ userSchema.statics.authenticate = async function (email, username, password) {
             return {
                 email: user.email,
                 username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                isStaff: user.isStaff,
                 token
-    
             }
 
         }
@@ -94,10 +96,19 @@ userSchema.statics.authenticate = async function (email, username, password) {
 
     }
 }
-// Get a user by id
-userSchema.statics.getById = async function (id) {
+// Authenticate a user
+userSchema.statics.getUserById = async function (userId) {
     try {
-        return this.findOne({ _id: id })
+        const user = await this.findById(userId);
+
+        return {
+            email: user.email,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            isStaff: user.isStaff,
+            token
+        }
     } catch (err) {
         throw err;
     }
