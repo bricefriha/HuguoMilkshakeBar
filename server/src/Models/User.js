@@ -97,17 +97,18 @@ userSchema.statics.authenticate = async function (email, username, password) {
     }
 }
 // Authenticate a user
-userSchema.statics.getUserById = async function (userId) {
+userSchema.statics.getById = async function (userId) {
     try {
-        const user = await this.findById(userId);
+        const user = await this.findOne({_id: userId});
 
+        if (!user)
+            throw "User doesn't exist";
         return {
             email: user.email,
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
             isStaff: user.isStaff,
-            token
         }
     } catch (err) {
         throw err;
