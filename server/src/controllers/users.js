@@ -8,10 +8,10 @@ router
     .post('/create', async (req, res) => {
 
         // Fetch all the informations
-        const { email, firstname, lastname, username, password, isStaff } = req.body;
-        user.createUser(email, firstname, lastname, username, password, isStaff)
-            .then(res.status(200).json({ message: 'User created' }))
-            .catch(err => res.status(500).json({ message: err }));
+        const { email, firstname, lastname, password, isStaff } = req.body;
+        user.createUser(email, firstname, lastname,  password, isStaff)
+            .then(data =>res.status(200).json({ message: 'User created' }))
+            .catch(err => res.status(500).json( err ));
     })
     .get('/', async (req, res) => {
 

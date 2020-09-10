@@ -39,13 +39,11 @@ const userSchema = new mongoose.Schema(
 );
 
 // Method to create a user
-userSchema.statics.createUser = async function (email, firstName, lastName, username, password, isStaff) {
+userSchema.statics.createUser = async function (email, firstName, lastName, password, isStaff) {
     try {
         var hash;
         // Verify that the username is not already taken
-        if (await this.findOne({ username })) {
-            throw 'Username "' + username + '" is already taken';
-        }
+        
         // Verify that the email adress is not already taken
         if (await this.findOne({ email })) {
             throw 'Email adress "' + email + '" is already taken';
