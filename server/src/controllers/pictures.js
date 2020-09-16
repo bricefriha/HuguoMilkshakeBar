@@ -16,7 +16,7 @@ router
         if(!req.file) {
             res.status(500).json({ message:'error' });
           }
-        await pic.savePicture(req.user.sub, req.body.title, req.body.description, 'http://192.168.0.7:3000/images/' + req.file.filename, req.file.filename)
+        await pic.savePicture(req.user.sub, req.body.title, req.body.description, 'http://192.168.1.67:8080//images/' + req.file.filename, req.file.filename)
             .then(data => res.status(200).json( data ))
             .catch(err => res.status(500).json({ message: err }));
     })

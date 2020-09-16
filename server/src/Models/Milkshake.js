@@ -6,9 +6,8 @@ const milkshakeSchema = new mongoose.Schema ({
         type: String,
         required: true,
     },
-    image: {
-        type: String,
-        
+    picture:{
+        type: String
     },
     description: {
         type: String,
@@ -21,13 +20,20 @@ const milkshakeSchema = new mongoose.Schema ({
 // Get all milkshakes
 milkshakeSchema.statics.getAll = async function () {
     try {
-        return await this.find();
+        return await this.aggregate({
+            $lookup: {
+                from: 'pictures',
+                localField: 'picture',
+                foreignField: '_id',
+                as: 'picture',
+            }
+        });
     } catch (err) {
         throw err;
     }
 }
 // create a milkshake
-milkshakeSchema.statics.createMilkshake = async function (userId, name, image, description, price) {
+milkshakeSchema.statics.createMilkshake = async function (userId, name, picture, description, price) {
     try {
         // Get the curent user
         const user = await userModel.findById(userId);
@@ -35,7 +41,7 @@ milkshakeSchema.statics.createMilkshake = async function (userId, name, image, d
         // Perform the action only if the user is a staff member
         if (user.isStaff) {
             // Create the milkshake
-            return await this.create({name, image, description, price});
+            return await this.create({name, picture, description, price});
 
         } else {
             // Throw an error
