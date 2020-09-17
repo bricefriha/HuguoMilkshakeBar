@@ -8,7 +8,7 @@ router
     .get('/', async (req, res) => {
         // get all milkshakes
         await milkshake.getAll()
-                       .then(data => res.status(200).json({ data }))
+                       .then(data => res.status(200).json( data ))
                        .catch(err => res.status(500).json({ message: err }));
     })
     .post('/create', async (req, res) => {

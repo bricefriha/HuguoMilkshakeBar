@@ -20,14 +20,7 @@ const milkshakeSchema = new mongoose.Schema ({
 // Get all milkshakes
 milkshakeSchema.statics.getAll = async function () {
     try {
-        return await this.aggregate({
-            $lookup: {
-                from: 'pictures',
-                localField: 'picture',
-                foreignField: '_id',
-                as: 'picture',
-            }
-        });
+        return await this.find();
     } catch (err) {
         throw err;
     }
