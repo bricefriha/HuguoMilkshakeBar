@@ -17,6 +17,16 @@ const milkshakeSchema = new mongoose.Schema ({
         required: true,
     }
 });
+
+// Get a milkshake by Id
+milkshakeSchema.statics.getById = async function (id) {
+    try {
+        // Return the milkshake by ID
+        return await this.findById(id);
+    } catch (err) {
+        throw err;
+    }
+}
 // Get all milkshakes
 milkshakeSchema.statics.getAll = async function () {
     try {

@@ -17,6 +17,7 @@ export const jwt = () => {
             '/tables/',
             '/reservations/',
             '/milkshakes/',
+            '/milkshakes/single',
             '/posts/',
             '/pictures/',
         ]

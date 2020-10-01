@@ -11,6 +11,15 @@ router
                        .then(data => res.status(200).json( data ))
                        .catch(err => res.status(500).json({ message: err }));
     })
+    .get('/single', async (req, res) => {
+        // Fetch information from the body
+        const { milkshakeId } = req.body;
+
+        // get all milkshakes
+        await milkshake.getById(milkshakeId)
+                       .then(data => res.status(200).json( data ))
+                       .catch(err => res.status(500).json({ message: err }));
+    })
     .post('/create', async (req, res) => {
 
         // Fetch information from the body
